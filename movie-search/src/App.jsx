@@ -15,15 +15,21 @@ const App = () => {
     try {
       const response = await fetch(url);
       const data = await response.json();
-      setMovies(data.results);
+
+      if (data.results) {
+        setMovies(data.results); // Assicuriamoci che sia sempre un array
+      } else {
+        setMovies([]); // Se qualcosa va storto, mettiamo un array vuoto
+      }
     } catch (error) {
       console.error("Errore nel recupero dati:", error);
+      setMovies([]); // Evitiamo errori impostando un array vuoto
     }
   };
 
   return (
     <div className="app">
-      <h1>Movie Search</h1>
+      <h1>Boolflix 🎬</h1>
       <SearchBar onSearch={fetchMovies} />
       <MovieList movies={movies} />
     </div>
