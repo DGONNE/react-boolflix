@@ -1,35 +1,33 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import SearchBar from "./components/SearchBar";
+import MovieList from "./components/MovieList";
 
-function App() {
-  const [count, setCount] = useState(0)
+const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
+
+const App = () => {
+  const [movies, setMovies] = useState([]);
+
+  const fetchMovies = async (query) => {
+    const url = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${encodeURIComponent(
+      query
+    )}&language=it-IT`;
+
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+      setMovies(data.results);
+    } catch (error) {
+      console.error("Errore nel recupero dati:", error);
+    }
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <div className="app">
+      <h1>Movie Search</h1>
+      <SearchBar onSearch={fetchMovies} />
+      <MovieList movies={movies} />
+    </div>
+  );
+};
 
-export default App
+export default App;
