@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
 const SearchBar = ({ onSearch }) => {
   const [query, setQuery] = useState("");
@@ -10,14 +10,14 @@ const SearchBar = ({ onSearch }) => {
   };
 
   return (
-    <div className="search-bar">
+    <div className="search-container">
       <input
         type="text"
-        placeholder="Cerca un film o una serie TV..."
+        placeholder="Cerca un film..."
         value={query}
         onChange={(e) => setQuery(e.target.value)}
       />
-      <button onClick={handleSearch}>Cerca</button>
+      <button onClick={handleSearch}>🔍</button>
     </div>
   );
 };
