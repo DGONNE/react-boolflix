@@ -2,7 +2,7 @@ import { useState } from "react";
 import SearchBar from "./components/SearchBar";
 import MovieList from "./components/MovieList";
 
-const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
+const API_KEY = "b7365b3071c93587b9817d842bd2d051";
 
 const App = () => {
   const [movies, setMovies] = useState([]);
